@@ -1,4 +1,4 @@
-package Dist::Zilla::Plugin::Acme::CPANModules;
+package Dist::Zilla::Plugin::Perinci::CmdLine;
 
 use 5.010001;
 use strict;
@@ -39,7 +39,7 @@ sub _get_abstract_from_meta_summary {
 
     unless ($filecontent =~ m{^#[ \t]*ABSTRACT:[ \t]*([^\n]*)[ \t]*$}m) {
         $self->log_debug(["Skipping %s: no # ABSTRACT", $filename]);
-        return undef;
+        return undef; ## no critic: Subroutines::ProhibitExplicitReturnUndef
     }
 
     my $abstract = $1;
@@ -56,7 +56,7 @@ sub _get_abstract_from_meta_summary {
         # find out the package of the file
         ($pkg = $mod_p) =~ s/\.pm\z//; $pkg =~ s!/!::!g;
     } else {
-        eval $filecontent;
+        eval $filecontent; ## no critic: BuiltinFunctions::ProhibitStringyEval
         die if $@;
         if ($filecontent =~ /\bpackage\s+(\w+(?:::\w+)*)/s) {
             $pkg = $1;
@@ -81,7 +81,7 @@ sub before_build {
 
    $filename or die 'No main module specified';
    -f $filename or die "Path ${filename} does not exist or not a file";
-   my $abstract = $self->_get_abstract_from_list_summary($filename);
+   my $abstract = $self->_get_abstract_from_meta_summary($filename);
    return unless $abstract;
 
    $self->zilla->abstract($abstract);
