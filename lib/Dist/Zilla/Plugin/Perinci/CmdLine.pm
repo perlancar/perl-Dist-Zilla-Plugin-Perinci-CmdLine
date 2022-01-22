@@ -164,3 +164,6 @@ For each F<Perinci/CmdLine/Plugin/*.pm> file:
 L<Perinci::CmdLine>
 
 L<Pod::Weaver::Plugin::Perinci::CmdLine>
+
+L<Dist::Zilla::Plugin::GenPericmdScript>, if you want to generate a
+Perinci::CmdLine-based CLI script in your distribution.
